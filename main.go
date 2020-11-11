@@ -4,7 +4,6 @@ import (
 	"database/sql"
 	"log"
 	"net/http"
-	"os"
 	"text/template"
 
 	_ "github.com/go-sql-driver/mysql"
@@ -20,7 +19,7 @@ type Tool struct {
 	Notes    string
 }
 
-func dbConn() (db *sql.DB) {
+/*func dbConn() (db *sql.DB) {
 	dbDriver := "mysql"
 	dbUser := os.Getenv("DATABASE_USERNAME")
 	dbPass := os.Getenv("DATABASE_PASSWORD")
@@ -32,7 +31,27 @@ func dbConn() (db *sql.DB) {
 		panic(err.Error())
 	}
 	return db
+}*/
+
+
+//KR Mod
+func dbConn() (db *sql.DB) {
+	dbDriver := "mysql"
+	dbUser := "root"
+	dbPass := "root"
+	dbName := "gowtdb"
+	dbServer := "localhost"
+	dbPort := "3306"
+	db, err := sql.Open(dbDriver, dbUser+":"+dbPass+"@tcp("+dbServer+":"+dbPort+")/"+dbName)
+	if err != nil {
+		panic(err.Error())
+	}
+	return db
 }
+
+
+
+
 
 var tmpl = template.Must(template.ParseGlob("templates/*"))
 
